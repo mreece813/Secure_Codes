@@ -1,0 +1,91 @@
+#!/bin/bash
+# Michael Reece 19/09/2019
+# 177000762
+# I Used Stackoverflow.com for help in my script for different commands
+rm -f list_directory.txt #This will remove file if it exists
+rm -f reverse_list.txt #This will remove file if it exists
+rm -f result.txt #This will remove file if it exists
+TIME=`date +"%r"` #This will create the TIME in a 12-hour time stamp
+DATE=`date +%m/%d/%Y` #This will create the DATE in a month/date/year format
+echo "$USER is running this script on $HOST at $TIME on $DATE"
+ls .. -lX >> list_directory.txt #This will put the parent directory in long list format
+ITEMS=`wc -l <  list_directory.txt` #This will count the line(ITEMS) in list_directory.txt 
+tac list_directory.txt >> reverse_list.txt #This will reverse the list_directory.txt
+echo "Saving long list format of the parent directory to the list_directory.txt "
+echo "there are $ITEMS items in the parent directory."
+echo "I will sort the file in reverse order and save it to reverse_list.txt"
+echo
+echo "Enter the name of the file we are searching:"
+read -r FILE
+LINES=`wc -l < $FILE` #This will count the lines in the FILE
+CHARACTERS=`wc -c < $FILE` #This will count the characters in the FILE
+echo
+echo "I will save information about the file in result.txt"
+echo "The number of the lines in the text is $LINES." 
+echo "The number of the lines in the text is $LINES." >> result.txt
+echo "The number of characters in the text is $CHARACTERS." 
+echo "The number of characters in the text is $CHARACTERS." >> result.txt
+echo 
+echo >> result.txt
+echo "Enter 3 character names to search for:" 
+echo "Enter 3 character names to search for:" >> result.txt
+read -r NAME1
+read -r NAME2
+read -r NAME3
+echo "$NAME1" >> result.txt
+echo "$NAME2" >> result.txt
+echo "$NAME3" >> result.txt
+echo
+echo >> result.txt
+S1=`grep $NAME1 $FILE -c` #This will search for the NAME in the FILE and count the amount of times it is found
+S2=`grep $NAME2 $FILE -c` #This will search for the NAME in the FILE and count the amount of times it is found
+S3=`grep $NAME3 $FILE -c` #This will search for the NAME in the FILE and count the amount of times it is found
+echo "$NAME1 speaks $S1 times."
+echo "$NAME1 speaks $S1 times." >> result.txt
+echo "$NAME2 speaks $S2 times." 
+echo "$NAME2 speaks $S2 times." >> result.txt
+echo "$NAME3 speaks $S3 times." 
+echo "$NAME3 speaks $S3 times." >> result.txt
+echo
+echo >> result.txt
+#This will compare the amount of times each NAME has spoke. These will be compared to NAME1 and will
+#print out who speaks more or less compared to NAME1
+if [ $S1 -lt $S2 ] && [ $S1 -lt $S3 ]
+then
+	echo "$NAME1 speaks less than $NAME2 and less than $NAME3." 
+	echo "$NAME1 speaks less than $NAME2 and less than $NAME3." >> result.txt
+elif [ $S1 -lt $S2 ] && [ $S1 -gt $S3 ]
+then
+	echo "$NAME1 speaks less than $NAME2 and more than $NAME3." 
+	echo "$NAME1 speaks less than $NAME2 and more than $NAME3." >> result.txt
+elif [ $S1 -gt $S2 ] && [ $S1 -lt $S3 ]
+then
+	echo "$NAME1 speaks more than $NAME2 and less than $NAME3."
+	echo "$NAME1 speaks more than $NAME2 and less then $NAME3." >> result.txt
+elif [ $S1 -gt $S2 ] && [ $S1 -gt $S3 ]
+then
+	echo "$NAME1 speaks more than $NAME2 and more than $NAME3."
+	echo "$NAME1 speaks more than $NAME2 and more than $NAME3." >> result.txt
+elif [ $S1 -eq $S2 ] && [ $S1 -lt $S3 ]
+then
+	echo "$NAME1 speaks the same amount as $NAME2 and less than $NAME3."
+	echo "$NAME1 speaks the same amount as $NAME2 and less than $NAME3." >> result.txt
+elif [ $S1 -eq $S2 ] && [ $S1 -gt $S3 ]
+then
+	echo "$NAME1 speaks the same amount as $NAME2 and more than $NAME3."
+	echo "$NAME1 speaks the same amount as $NAME2 and more than $NAME3." >> result.txt
+elif [ $S1 -lt $S2 ] && [ $S1 -eq $S3 ]
+then
+	echo "$NAME1 speaks less than $NAME2 and the same amount as $NAME3."
+	echo "$NAME1 speaks less than $NAME2 and the same amount as $NAME3." >> result.txt
+elif [ $S1 -gt  $S2 ] && [ $S1 -eq $S3 ]
+then
+	echo "$NAME1 speaks more than $NAME2 and the same amount as $NAME3."
+	echo "$NAME1 speaks more than $NAME2 and the same amount as $NAME3." >> result.txt
+else
+	echo "$NAME1 speaks the same amount as $NAME2 and the same amount as $NAME3."
+	echo "$NAME1 speaks the same amount as $NAME2 and the same amount as $NAME3." >> result.txt
+fi
+echo
+echo "The above lines of information were added to the result.txt."
+
